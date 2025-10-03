@@ -1,6 +1,5 @@
 const { Pool } = require('pg');
 
-// Configuración de la base de datos PostgreSQL
 const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
   host: process.env.DB_HOST || 'localhost',
@@ -10,7 +9,6 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-// Función para probar la conexión
 const testConnection = async () => {
   try {
     const client = await pool.connect();
@@ -23,7 +21,6 @@ const testConnection = async () => {
   }
 };
 
-// Función para ejecutar consultas
 const query = async (text, params) => {
   const start = Date.now();
   try {
@@ -37,7 +34,6 @@ const query = async (text, params) => {
   }
 };
 
-// Función para obtener un cliente del pool
 const getClient = async () => {
   return await pool.connect();
 };

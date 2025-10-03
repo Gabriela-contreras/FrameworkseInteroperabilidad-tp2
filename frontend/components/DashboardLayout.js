@@ -2,17 +2,17 @@
 
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { logout, getUser } from '@/lib/auth';
+import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const user = getUser();
+  const { user, logout } = useAuth();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     router.push('/');
   };
 
@@ -44,7 +44,6 @@ export default function DashboardLayout({ children }) {
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-700">
                 <span className="font-medium">{user?.nombre}</span>
-                {/* <span className="text-gray-500 ml-2">Doc: {user?.documento}</span> */}
               </div>
               <button
                 onClick={handleLogout}

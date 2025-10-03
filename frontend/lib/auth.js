@@ -1,5 +1,4 @@
-// Utilidades para manejo de autenticación
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
 
 export const login = async (documento, password) => {
   try {
@@ -8,6 +7,7 @@ export const login = async (documento, password) => {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({ documento, password }),
     });
 
@@ -17,9 +17,7 @@ export const login = async (documento, password) => {
       throw new Error(data.error || 'Error en el login');
     }
 
-    // Guardar token en localStorage
     if (typeof window !== 'undefined') {
-      localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
     }
 
@@ -29,19 +27,47 @@ export const login = async (documento, password) => {
   }
 };
 
-export const logout = () => {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/';
+export const register = async (nombre, documento, email, password) => {
+  try {
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ nombre, documento, email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Error en el registro');
+    }
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(data.user));
+    }
+
+    return data;
+  } catch (error) {
+    throw error;
   }
 };
 
-export const getToken = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('token');
+export const logout = async () => {
+  try {
+    await fetch(`${API_URL}/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+  } finally {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user');
+      window.location.href = '/';
+    }
   }
-  return null;
 };
 
 export const getUser = () => {
@@ -53,21 +79,23 @@ export const getUser = () => {
 };
 
 export const isAuthenticated = () => {
-  return !!getToken();
+  return !!getUser();
 };
 
 export const verifyToken = async () => {
   try {
-    const token = getToken();
-    if (!token) return false;
-
     const response = await fetch(`${API_URL}/auth/verify`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
+      credentials: 'include',
     });
 
     const data = await response.json();
+    
+    if (data.valid && data.user) {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+    }
+    
     return data.valid;
   } catch (error) {
     return false;

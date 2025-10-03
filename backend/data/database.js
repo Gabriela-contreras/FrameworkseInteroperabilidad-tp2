@@ -1,9 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { query } = require('../config/database');
 
-// Funciones para interactuar con PostgreSQL
-
-// Usuarios
 const getUsuarios = async () => {
   const result = await query('SELECT * FROM usuarios ORDER BY id');
   return result.rows;
@@ -14,17 +11,31 @@ const getUsuarioByDocumento = async (documento) => {
   return result.rows[0];
 };
 
+const getUsuarioByEmail = async (email) => {
+  const result = await query('SELECT * FROM usuarios WHERE email = $1', [email]);
+  return result.rows[0];
+};
+
+const checkDocumentoExists = async (documento) => {
+  const result = await query('SELECT id FROM usuarios WHERE documento = $1', [documento]);
+  return result.rows.length > 0;
+};
+
+const checkEmailExists = async (email) => {
+  const result = await query('SELECT id FROM usuarios WHERE email = $1', [email]);
+  return result.rows.length > 0;
+};
+
 const createUsuario = async (usuario) => {
-  const { documento, nombre, password } = usuario;
+  const { documento, nombre, email, password } = usuario;
   const hashedPassword = await hashPassword(password);
   const result = await query(
-    'INSERT INTO usuarios (documento, nombre, password) VALUES ($1, $2, $3) RETURNING *',
-    [documento, nombre, hashedPassword]
+    'INSERT INTO usuarios (documento, nombre, email, password) VALUES ($1, $2, $3, $4) RETURNING *',
+    [documento, nombre, email, hashedPassword]
   );
   return result.rows[0];
 };
 
-// Productos
 const getProductos = async () => {
   const result = await query('SELECT * FROM productos ORDER BY id');
   return result.rows;
@@ -58,7 +69,6 @@ const deleteProducto = async (id) => {
   return result.rows[0];
 };
 
-// Mensajes de contacto
 const getMensajesContacto = async () => {
   const result = await query('SELECT * FROM mensajes_contacto ORDER BY created_at DESC');
   return result.rows;
@@ -73,30 +83,28 @@ const createMensajeContacto = async (mensaje) => {
   return result.rows[0];
 };
 
-// Función para hashear password
 const hashPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
 };
 
 module.exports = {
-  // Usuarios
   getUsuarios,
   getUsuarioByDocumento,
+  getUsuarioByEmail,
+  checkDocumentoExists,
+  checkEmailExists,
   createUsuario,
   
-  // Productos
   getProductos,
   getProductoById,
   createProducto,
   updateProducto,
   deleteProducto,
   
-  // Mensajes de contacto
   getMensajesContacto,
   createMensajeContacto,
   
-  // Utilidades
   hashPassword
 };
 

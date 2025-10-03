@@ -2,33 +2,94 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { getUsuarioByDocumento } = require('../data/database');
+const { getUsuarioByDocumento, checkDocumentoExists, checkEmailExists, createUsuario } = require('../data/database');
 
-// POST /auth/login - Login con documento y contraseña
+router.post('/register', async (req, res) => {
+  try {
+    const { nombre, documento, email, password } = req.body;
+
+    if (!nombre || !documento || !email || !password) {
+      return res.status(400).json({ error: 'Todos los campos son requeridos' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Formato de email inválido' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres' });
+    }
+
+    const documentoExists = await checkDocumentoExists(documento);
+    if (documentoExists) {
+      return res.status(400).json({ error: 'Ya existe un usuario con este documento' });
+    }
+
+    const emailExists = await checkEmailExists(email);
+    if (emailExists) {
+      return res.status(400).json({ error: 'Ya existe un usuario con este email' });
+    }
+
+    const nuevoUsuario = await createUsuario({
+      nombre,
+      documento,
+      email,
+      password
+    });
+
+    const token = jwt.sign(
+      { 
+        id: nuevoUsuario.id, 
+        documento: nuevoUsuario.documento,
+        nombre: nuevoUsuario.nombre 
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000
+    });
+
+    res.status(201).json({
+      message: 'Usuario registrado exitosamente',
+      user: {
+        id: nuevoUsuario.id,
+        documento: nuevoUsuario.documento,
+        nombre: nuevoUsuario.nombre,
+        email: nuevoUsuario.email
+      }
+    });
+  } catch (error) {
+    console.error('Error en registro:', error);
+    res.status(500).json({ error: 'Error en el servidor' });
+  }
+});
+
 router.post('/login', async (req, res) => {
   try {
     const { documento, password } = req.body;
 
-    // Validar campos
     if (!documento || !password) {
       return res.status(400).json({ error: 'Documento y contraseña son requeridos' });
     }
 
-    // Buscar usuario por documento
     const usuario = await getUsuarioByDocumento(documento);
     
     if (!usuario) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
 
-    // Verificar contraseña
     const passwordValida = await bcrypt.compare(password, usuario.password);
     
     if (!passwordValida) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
 
-    // Generar JWT
     const token = jwt.sign(
       { 
         id: usuario.id, 
@@ -39,13 +100,20 @@ router.post('/login', async (req, res) => {
       { expiresIn: '24h' }
     );
 
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000
+    });
+
     res.json({
       message: 'Login exitoso',
-      token,
       user: {
         id: usuario.id,
         documento: usuario.documento,
-        nombre: usuario.nombre
+        nombre: usuario.nombre,
+        email: usuario.email
       }
     });
   } catch (error) {
@@ -54,10 +122,13 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// GET /auth/verify - Verificar token
+router.post('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Sesión cerrada exitosamente' });
+});
+
 router.get('/verify', (req, res) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({ valid: false });

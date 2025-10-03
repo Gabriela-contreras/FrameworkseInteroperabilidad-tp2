@@ -1,20 +1,15 @@
-// Utilidades para llamadas a la API
-import { getToken } from './auth';
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
 
 const getHeaders = () => {
-  const token = getToken();
   return {
     'Content-Type': 'application/json',
-    ...(token && { 'Authorization': `Bearer ${token}` }),
   };
 };
 
-// Productos
 export const getProductos = async () => {
   const response = await fetch(`${API_URL}/productos`, {
     headers: getHeaders(),
+    credentials: 'include',
   });
   
   if (!response.ok) {
@@ -28,6 +23,7 @@ export const createProducto = async (producto) => {
   const response = await fetch(`${API_URL}/productos`, {
     method: 'POST',
     headers: getHeaders(),
+    credentials: 'include',
     body: JSON.stringify(producto),
   });
   
@@ -44,6 +40,7 @@ export const updateProducto = async (id, producto) => {
   const response = await fetch(`${API_URL}/productos/${id}`, {
     method: 'PUT',
     headers: getHeaders(),
+    credentials: 'include',
     body: JSON.stringify(producto),
   });
   
@@ -60,6 +57,7 @@ export const deleteProducto = async (id) => {
   const response = await fetch(`${API_URL}/productos/${id}`, {
     method: 'DELETE',
     headers: getHeaders(),
+    credentials: 'include',
   });
   
   const data = await response.json();
@@ -71,11 +69,11 @@ export const deleteProducto = async (id) => {
   return data;
 };
 
-// Contacto
 export const enviarMensajeContacto = async (mensaje) => {
   const response = await fetch(`${API_URL}/contactar`, {
     method: 'POST',
     headers: getHeaders(),
+    credentials: 'include',
     body: JSON.stringify(mensaje),
   });
   
