@@ -1,0 +1,151 @@
+═══════════════════════════════════════════════════════════════
+  GABY AUTH - PROYECTO DE AUTENTICACIÓN CON NEXT.JS + EXPRESS
+═══════════════════════════════════════════════════════════════
+
+📦 CONTENIDO:
+- Backend: Express.js con JWT
+- Frontend: Next.js 14 + Tailwind CSS
+- Dashboard completo con gestión de productos y contacto
+
+═══════════════════════════════════════════════════════════════
+🚀 INSTALACIÓN RÁPIDA (3 MINUTOS)
+═══════════════════════════════════════════════════════════════
+
+1️⃣ DESCOMPRIMIR EL ARCHIVO
+   Extrae el archivo ZIP en tu ubicación deseada
+
+2️⃣ EJECUTAR SCRIPT DE INSTALACIÓN
+   Abre la terminal en la carpeta del proyecto y ejecuta:
+   
+   ./setup.sh
+   
+   Esto instalará todas las dependencias automáticamente
+
+3️⃣ INICIAR BACKEND (Terminal 1)
+   cd backend
+   npm run dev
+   
+   ✅ Verás: "Servidor corriendo en puerto 5001"
+
+4️⃣ INICIAR FRONTEND (Terminal 2 - nueva terminal)
+   cd frontend
+   npm run dev
+   
+   ✅ Verás: "Ready - started server on 0.0.0.0:3000"
+
+5️⃣ ABRIR EN EL NAVEGADOR
+   http://localhost:3000
+
+═══════════════════════════════════════════════════════════════
+🔑 CREDENCIALES DE PRUEBA
+═══════════════════════════════════════════════════════════════
+
+Documento: 12345678
+Contraseña: password123
+
+═══════════════════════════════════════════════════════════════
+📝 INSTALACIÓN MANUAL (Si el script no funciona)
+═══════════════════════════════════════════════════════════════
+
+BACKEND:
+--------
+cd backend
+npm install
+
+Crear archivo .env con:
+PORT=5001
+JWT_SECRET=tu_clave_secreta_muy_segura
+NODE_ENV=development
+
+npm run dev
+
+FRONTEND:
+---------
+cd frontend
+npm install
+
+Crear archivo .env.local con:
+NEXT_PUBLIC_API_URL=http://localhost:5001
+
+npm run dev
+
+═══════════════════════════════════════════════════════════════
+🌐 URLs DEL PROYECTO
+═══════════════════════════════════════════════════════════════
+
+Frontend:  http://localhost:3000
+Backend:   http://localhost:5001
+Dashboard: http://localhost:3000/dashboard
+Productos: http://localhost:3000/dashboard/productos
+Contacto:  http://localhost:3000/dashboard/contactar
+
+═══════════════════════════════════════════════════════════════
+📚 DOCUMENTACIÓN
+═══════════════════════════════════════════════════════════════
+
+README.md              → Documentación completa
+QUICKSTART.md          → Guía de inicio rápido
+PASOS_INSTALACION.md   → Pasos detallados de instalación
+API_TESTING.md         → Testing de endpoints con cURL
+PROJECT_STRUCTURE.md   → Estructura del proyecto
+CHECKLIST.md           → Lista de verificación
+
+═══════════════════════════════════════════════════════════════
+✨ CARACTERÍSTICAS
+═══════════════════════════════════════════════════════════════
+
+✅ Autenticación con JWT
+✅ Login con documento y contraseña
+✅ Dashboard protegido
+✅ CRUD completo de productos
+✅ Formulario de contacto
+✅ Diseño responsive moderno
+✅ Tailwind CSS
+✅ API REST completa
+
+═══════════════════════════════════════════════════════════════
+⚠️ NOTA IMPORTANTE
+═══════════════════════════════════════════════════════════════
+
+⚠️  Si el puerto 5000 está ocupado en tu sistema (común en macOS 
+    por AirPlay), el proyecto ya está configurado para usar el 
+    puerto 5001.
+
+⚠️  Los archivos .env y .env.local NO están incluidos por 
+    seguridad. Se crearán automáticamente con el script de 
+    instalación o debes crearlos manualmente.
+
+⚠️  La base de datos es en memoria, los datos se reinician al 
+    cerrar el servidor. Para producción, migrar a MongoDB o 
+    PostgreSQL.
+
+═══════════════════════════════════════════════════════════════
+🐛 SOLUCIÓN DE PROBLEMAS
+═══════════════════════════════════════════════════════════════
+
+"Puerto 5001 en uso":
+  lsof -i :5001 | grep LISTEN
+  kill -9 <PID>
+
+"Cannot find module":
+  Reinstala dependencias:
+  rm -rf node_modules package-lock.json
+  npm install
+
+"fetch failed" en frontend:
+  Verifica que el backend esté corriendo
+  Verifica .env.local tenga: NEXT_PUBLIC_API_URL=http://localhost:5001
+
+═══════════════════════════════════════════════════════════════
+📧 SOPORTE
+═══════════════════════════════════════════════════════════════
+
+Si tienes problemas:
+1. Lee CHECKLIST.md
+2. Revisa API_TESTING.md para probar el backend
+3. Verifica que ambos servidores estén corriendo
+
+═══════════════════════════════════════════════════════════════
+
+¡Disfruta usando Gaby Auth! 🎉
+
