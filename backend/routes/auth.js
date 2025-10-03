@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { usuarios } = require('../data/database');
+const { getUsuarioByDocumento } = require('../data/database');
 
 // POST /auth/login - Login con documento y contraseña
 router.post('/login', async (req, res) => {
@@ -15,7 +15,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Buscar usuario por documento
-    const usuario = usuarios.find(u => u.documento === documento);
+    const usuario = await getUsuarioByDocumento(documento);
     
     if (!usuario) {
       return res.status(401).json({ error: 'Credenciales inválidas' });

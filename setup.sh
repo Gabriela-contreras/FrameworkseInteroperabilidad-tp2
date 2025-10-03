@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Configurando proyecto Gaby Auth..."
+echo "🚀 Configurando proyecto "
 echo ""
 
 # Colores

@@ -1,4 +1,4 @@
-# 🚀 Inicio Rápido - Gaby Auth
+# 🚀 Inicio Rápido -
 
 ## Pasos para ejecutar el proyecto
 

@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Gaby Auth - Sistema de Gestión',
+  title: 'Sistema de Gestión Inventario',
   description: 'Sistema de autenticación y gestión de productos',
 }
 

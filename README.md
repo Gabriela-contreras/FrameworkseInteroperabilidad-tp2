@@ -1,4 +1,4 @@
-# Gaby Auth - Sistema de Autenticación y Gestión
+#  Auth - Sistema de Autenticación y Gestión
 
 Sistema completo de autenticación con dashboard para gestión de productos y contacto.
 
@@ -32,8 +32,8 @@ Sistema completo de autenticación con dashboard para gestión de productos y co
 
 ### 1. Clonar el repositorio
 ```bash
-git clone <tu-repositorio>
-cd gaby-auth
+git clone 
+
 ```
 
 ### 2. Instalar Backend
@@ -89,7 +89,7 @@ Contraseña: password123
 ## 📚 Estructura del Proyecto
 
 ```
-gaby-auth/
+
 ├── backend/
 │   ├── data/
 │   │   └── database.js          # Base de datos en memoria
@@ -220,5 +220,5 @@ Este proyecto está bajo la Licencia ISC.
 
 ## 📧 Contacto
 
-Para preguntas o soporte, contacta a: info@gabyauth.com
+Para preguntas o soporte, contacta a: gabriela.contreras@est.fi.uncoma.edu.ar
 

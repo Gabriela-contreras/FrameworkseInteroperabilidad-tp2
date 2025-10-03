@@ -48,8 +48,8 @@ export default function ContactarPage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Contactar</h1>
-        <p className="mt-2 text-gray-600">Envíanos un mensaje y nos pondremos en contacto contigo</p>
+        <h1 className="text-3xl font-bold text-gray-900">Contactar Soporte</h1>
+        <p className="mt-2 text-gray-600">Envíanos un mensaje y resolvemos tu problema </p>
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-8">
@@ -144,9 +144,9 @@ export default function ContactarPage() {
         <div className="mt-8 pt-8 border-t border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Información de Contacto</h3>
           <div className="space-y-2 text-gray-600">
-            <p>📧 Email: info@gabyauth.com</p>
-            <p>📞 Teléfono: +1 (555) 123-4567</p>
-            <p>📍 Dirección: Av. Principal 123, Ciudad, País</p>
+            <p>📧 Email: controlInventario@gmail.com</p>
+            <p>📞 Teléfono: +54 0299 595-4316</p>
+            <p>📍 Dirección: Av. Argentina 123 Centenario Neuquén</p>
           </div>
         </div>
       </div>

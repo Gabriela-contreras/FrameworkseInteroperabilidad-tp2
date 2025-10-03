@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { logout, getUser } from '@/lib/auth';
+import Link from 'next/link';
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -16,17 +17,18 @@ export default function DashboardLayout({ children }) {
   };
 
   const navigation = [
-    { name: 'Productos', href: '/dashboard/productos', icon: '📦' },
-    { name: 'Contactar', href: '/dashboard/contactar', icon: '📧' },
+    { name: 'Productos', href: '/dashboard/productos', icon: '' },
+    { name: 'Contactar', href: '/dashboard/contactar', icon: '' },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar superior */}
       <nav className="bg-white shadow-lg fixed w-full z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto ">
           <div className="flex justify-between h-16">
-            <div className="flex items-center">
+
+            <div className="flex items-center justify-center">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
@@ -42,11 +44,11 @@ export default function DashboardLayout({ children }) {
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-700">
                 <span className="font-medium">{user?.nombre}</span>
-                <span className="text-gray-500 ml-2">Doc: {user?.documento}</span>
+                {/* <span className="text-gray-500 ml-2">Doc: {user?.documento}</span> */}
               </div>
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+                className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Cerrar Sesión
               </button>
@@ -58,9 +60,8 @@ export default function DashboardLayout({ children }) {
       <div className="flex pt-16">
         {/* Sidebar */}
         <aside
-          className={`${
-            sidebarOpen ? 'w-64' : 'w-0'
-          } bg-white shadow-lg h-screen fixed overflow-hidden transition-all duration-300 ease-in-out`}
+          className={`${sidebarOpen ? 'w-64' : 'w-0'
+            } bg-white shadow-lg h-screen fixed overflow-hidden transition-all duration-300 ease-in-out`}
         >
           <nav className="mt-5 px-2">
             {navigation.map((item) => {
@@ -69,25 +70,24 @@ export default function DashboardLayout({ children }) {
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`${
-                    isActive
+                  className={`${isActive
                       ? 'bg-primary-100 text-primary-900 border-l-4 border-primary-600'
                       : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                  } group flex items-center px-3 py-3 text-sm font-medium rounded-md mb-2 transition-colors duration-200`}
+                    } group flex items-center px-3 py-3 text-sm font-medium rounded-md mb-2 transition-colors duration-200`}
                 >
-                  <span className="mr-3 text-xl">{item.icon}</span>
                   {item.name}
                 </a>
               );
             })}
+            
           </nav>
+
         </aside>
 
         {/* Main content */}
         <main
-          className={`${
-            sidebarOpen ? 'ml-64' : 'ml-0'
-          } flex-1 transition-all duration-300 ease-in-out p-8`}
+          className={`${sidebarOpen ? 'ml-64' : 'ml-0'
+            } flex-1 transition-all duration-300 ease-in-out p-8`}
         >
           {children}
         </main>

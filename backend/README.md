@@ -12,7 +12,7 @@ npm install
 
 Crear archivo `.env`:
 ```env
-PORT=5000
+PORT=5001
 JWT_SECRET=tu_clave_secreta_muy_segura_cambiala_en_produccion
 NODE_ENV=development
 ```
