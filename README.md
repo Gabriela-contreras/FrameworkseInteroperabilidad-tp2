@@ -1,83 +1,115 @@
-#  Auth - Sistema de Autenticación y Gestión
 
-Sistema completo de autenticación con dashboard para gestión de productos y contacto.
 
-## 🚀 Tecnologías
+# 📦 Control de Inventario
 
-### Backend
-- **Express.js** - Framework de Node.js
-- **JWT** - Autenticación con tokens
-- **bcryptjs** - Encriptación de contraseñas
-- **CORS** - Middleware para peticiones cross-origin
+Sistema completo de **autenticación y gestión** con **dashboard para control de inventario y contacto**, desarrollado con tecnologías modernas en **Node.js**, **Express** y **Next.js**.
 
-### Frontend
-- **Next.js 14** - Framework de React
-- **Tailwind CSS** - Framework de estilos
-- **Axios** - Cliente HTTP (opcional)
+---
 
-## 📋 Características
+## 🚀 Tecnologías Utilizadas
 
-- ✅ Autenticación con documento y contraseña
-- ✅ Protección de rutas con JWT
-- ✅ Dashboard responsive y moderno
-- ✅ CRUD completo de productos
-- ✅ Formulario de contacto
-- ✅ Diseño corporativo con Tailwind CSS
+### 🖥️ Backend
 
-## 🛠️ Instalación
+* **Express.js** – Framework minimalista para Node.js
+* **JWT (JSON Web Tokens)** – Autenticación segura basada en tokens
+* **Nodemailer** – Envío de correos desde el formulario de contacto
 
-### Requisitos Previos
-- Node.js (versión 16 o superior)
-- npm o yarn
+### 💻 Frontend
 
-### 1. Clonar el repositorio
+* **Next.js 14** – Framework moderno basado en React
+* **Tailwind CSS** – Framework de estilos para diseño rápido y responsive
+
+---
+
+## 📋 Características Principales
+
+* ✅ **Autenticación** con documento y contraseña
+* ✅ **Protección de rutas** mediante JWT
+* ✅ **Dashboard moderno y responsive**
+* ✅ **CRUD completo** de productos (control de inventario)
+* ✅ **Formulario de contacto funcional** con **Nodemailer**
+* ✅ **Diseño profesional y personalizable** con Tailwind CSS
+
+---
+
+## 🛠️ Instalación y Configuración
+
+### 🔧 Requisitos Previos
+
+* Node.js (versión 16 o superior)
+* npm o yarn
+
+### 1️⃣ Clonar el repositorio
+
 ```bash
-git clone 
-
+git clone https://github.com/Gabriela-contreras/FrameworkseInteroperabilidad-tp2.git
 ```
 
-### 2. Instalar Backend
+### 2️⃣ Instalar dependencias del Backend
+
 ```bash
 cd backend
 npm install
 ```
 
-### 3. Configurar variables de entorno
+### 3️⃣ Configurar variables de entorno (Backend)
+
 Crea un archivo `.env` en la carpeta `backend`:
+
 ```env
-PORT=5000
-JWT_SECRET=tu_clave_secreta_muy_segura_cambiala_en_produccion
+PORT=5001
+JWT_SECRET=tu_clave_secreta_muy_segura
 NODE_ENV=development
+
+# Configuración de correo (Nodemailer)
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=tu_correo@gmail.com
+MAIL_PASS=tu_contraseña_o_token
 ```
 
-### 4. Instalar Frontend
+> ⚠️ En producción, usa **tokens de aplicación** o servicios como **SendGrid** o **Mailgun**.
+
+### 4️⃣ Instalar dependencias del Frontend
+
 ```bash
 cd ../frontend
 npm install
 ```
 
-### 5. Configurar variables de entorno del Frontend
+### 5️⃣ Configurar variables de entorno (Frontend)
+
 Crea un archivo `.env.local` en la carpeta `frontend`:
+
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
+NEXT_PUBLIC_API_URL=http://localhost:5001
 ```
 
-## 🚦 Ejecutar el Proyecto
+---
 
-### Iniciar Backend
+## 🚦 Ejecución del Proyecto
+
+### ▶️ Iniciar Backend
+
 ```bash
 cd backend
 npm run dev
 ```
-El servidor estará corriendo en `http://localhost:5000`
 
-### Iniciar Frontend
+El servidor correrá en `http://localhost:5001`
+
+### ▶️ Iniciar Frontend
+
 En otra terminal:
+
 ```bash
 cd frontend
 npm run dev
 ```
+
 La aplicación estará disponible en `http://localhost:3000`
+
+---
 
 ## 👤 Credenciales de Prueba
 
@@ -86,10 +118,11 @@ Documento: 12345678
 Contraseña: password123
 ```
 
-## 📚 Estructura del Proyecto
+---
+
+## 🧱 Estructura del Proyecto
 
 ```
-
 ├── backend/
 │   ├── data/
 │   │   └── database.js          # Base de datos en memoria
@@ -97,8 +130,8 @@ Contraseña: password123
 │   │   └── auth.js              # Middleware de autenticación
 │   ├── routes/
 │   │   ├── auth.js              # Rutas de autenticación
-│   │   ├── productos.js         # CRUD de productos
-│   │   └── contactar.js         # Endpoint de contacto
+│   │   ├── productos.js         # CRUD de productos (inventario)
+│   │   └── contactar.js         # Endpoint de contacto (usa Nodemailer)
 │   ├── scripts/
 │   │   └── generateHash.js      # Script para generar hashes
 │   ├── .env                     # Variables de entorno
@@ -119,10 +152,10 @@ Contraseña: password123
     │   └── globals.css          # Estilos globales
     ├── components/
     │   ├── DashboardLayout.js   # Layout del dashboard
-    │   └── ProtectedRoute.js    # Componente de protección
+    │   └── ProtectedRoute.js    # Protección de rutas
     ├── lib/
     │   ├── auth.js              # Utilidades de autenticación
-    │   └── api.js               # Utilidades de API
+    │   └── api.js               # Llamadas a la API
     ├── .env.local               # Variables de entorno
     ├── next.config.js
     ├── tailwind.config.js
@@ -130,95 +163,60 @@ Contraseña: password123
     └── package.json
 ```
 
+---
+
 ## 🔐 API Endpoints
 
-### Autenticación
-- `POST /auth/login` - Login con documento y contraseña
-- `GET /auth/verify` - Verificar token
+### 🔑 Autenticación
 
-### Productos (requiere autenticación)
-- `GET /productos` - Obtener todos los productos
-- `GET /productos/:id` - Obtener un producto
-- `POST /productos` - Crear producto
-- `PUT /productos/:id` - Actualizar producto
-- `DELETE /productos/:id` - Eliminar producto
+* `POST /auth/login` – Login con documento y contraseña
+* `GET /auth/verify` – Verificar token
 
-### Contacto (requiere autenticación)
-- `POST /contactar` - Enviar mensaje de contacto
-- `GET /contactar` - Obtener mensajes (admin)
+### 📦 Productos (rutas protegidas)
 
-## 🎨 Características del Frontend
+* `GET /productos` – Obtener todos los productos
+* `GET /productos/:id` – Obtener producto por ID
+* `POST /productos` – Crear producto
+* `PUT /productos/:id` – Actualizar producto
+* `DELETE /productos/:id` – Eliminar producto
 
-### Página de Login
-- Formulario con validación
-- Mensajes de error amigables
-- Diseño responsive y moderno
-- Redirección automática al dashboard
+### 📧 Contacto (requiere autenticación)
 
-### Dashboard
-- Sidebar colapsable
-- Navegación intuitiva
-- Información del usuario
-- Botón de cerrar sesión
+* `POST /contactar` – Enviar mensaje por correo con Nodemailer
+* `GET /contactar` – Obtener mensajes (solo admin)
 
-### Gestión de Productos
-- Tabla con todos los productos
-- Modal para crear/editar productos
-- Confirmación para eliminar
-- Diseño responsive
+---
 
-### Formulario de Contacto
-- Validación de campos
-- Mensajes de éxito/error
-- Información de contacto adicional
 
-## 🔒 Seguridad
+## 🚀 Despliegue
 
-- Contraseñas hasheadas con bcrypt
-- Autenticación con JWT
-- Tokens con expiración (24 horas)
-- Validación de tokens en cada petición protegida
-- CORS configurado
+### 🔧 Backend
 
-## 📝 Notas Importantes
+* Variables de entorno seguras
+* Base de datos real
+* HTTPS habilitado
+* Rate limiting
+* Logs y monitoreo
 
-1. **Base de datos en memoria**: Los datos se almacenan en memoria y se pierden al reiniciar el servidor. En producción, implementar una base de datos real (MongoDB, PostgreSQL, etc.).
+### 💻 Frontend
 
-2. **Secreto JWT**: Cambiar `JWT_SECRET` en producción por una clave segura.
+* Configurar variables de entorno
+* Build optimizado:
 
-3. **CORS**: Configurar correctamente las URLs permitidas en producción.
+  ```bash
+  npm run build
+  ```
+* Desplegar en **Vercel**, **Netlify** u otro servicio
+* Asignar dominio personalizado
 
-4. **Validaciones**: Implementar validaciones más robustas en producción.
-
-## 🚀 Despliegue en Producción
-
-### Backend
-- Usar variables de entorno seguras
-- Implementar base de datos real
-- Configurar HTTPS
-- Implementar rate limiting
-- Añadir logs y monitoreo
-
-### Frontend
-- Configurar variables de entorno de producción
-- Optimizar build con `npm run build`
-- Usar servicios como Vercel o Netlify
-- Configurar dominio personalizado
-
-## 🤝 Contribuir
-
-Las contribuciones son bienvenidas. Por favor:
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+---
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia ISC.
+Este proyecto está bajo la licencia **ISC**.
 
-## 📧 Contacto
+---
 
-Para preguntas o soporte, contacta a: gabriela.contreras@est.fi.uncoma.edu.ar
+## 📬 Contacto
 
+👩‍💻 **Autoras:** Gabriela Contreras -Katherine Contreras
