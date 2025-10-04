@@ -22,32 +22,32 @@ export default function DashboardLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-800 text-white">
       {/* Navbar superior */}
-      <nav className="bg-white shadow-lg fixed w-full z-10">
+      <nav className="bg-gray-700  shadow-lg fixed w-full z-10">
         <div className="max-w-7xl mx-auto ">
           <div className="flex justify-between h-16">
 
             <div className="flex items-center justify-center">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+                className="p-2 rounded-md text-white  hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-              <h1 className="ml-4 text-xl font-bold text-gray-900">
+              <h1 className="ml-4 text-xl font-bold text-white">
                 Sistema de Gestión
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-sm text-gray-700">
+              <div className="text-sm text-light">
                 <span className="font-medium">{user?.nombre}</span>
               </div>
               <button
                 onClick={handleLogout}
-                className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+                className="bg-gray-500 hover:bg-gray-400 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Cerrar Sesión
               </button>
@@ -60,7 +60,7 @@ export default function DashboardLayout({ children }) {
         {/* Sidebar */}
         <aside
           className={`${sidebarOpen ? 'w-64' : 'w-0'
-            } bg-white shadow-lg h-screen fixed overflow-hidden transition-all duration-300 ease-in-out`}
+            } bg-gray-700 shadow-lg h-screen fixed overflow-hidden transition-all duration-300 ease-in-out`}
         >
           <nav className="mt-5 px-2">
             {navigation.map((item) => {
@@ -71,7 +71,7 @@ export default function DashboardLayout({ children }) {
                   href={item.href}
                   className={`${isActive
                       ? 'bg-primary-100 text-primary-900 border-l-4 border-primary-600'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                      : 'text-white hover:bg-gray-100 hover:text-gray-900'
                     } group flex items-center px-3 py-3 text-sm font-medium rounded-md mb-2 transition-colors duration-200`}
                 >
                   {item.name}
