@@ -1,4 +1,4 @@
-# Backend - Gaby Auth
+# Backend 
 
 API REST construida con Express.js para autenticación y gestión de productos.
 
